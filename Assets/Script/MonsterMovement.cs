@@ -12,8 +12,6 @@ public class MonsterMovement : MonoBehaviour
     public Transform playerTransform;
     public bool isChasing;
     public float chaseDistance;
-    private bool enemyX;
-    private bool enemyY;
 
     //animation
     private Animator anim;
@@ -21,6 +19,7 @@ public class MonsterMovement : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+
         if (playerTransform.position.x < transform.position.x)
         {
             // Player is to the left, so face right initially

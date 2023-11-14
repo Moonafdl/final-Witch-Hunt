@@ -17,12 +17,15 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
 
+    //knockback
+    public float KBForce;
+    public float KBCounter;
+    public float KBTotalTime;
+
+    public bool KnockFromRight;
+
     private enum MovementState { idle, running, jumping, falling}
-
-    //coyoteTime
-
-    private float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
+    
 
     void Start()
     {
@@ -36,16 +39,30 @@ public class playerMovement : MonoBehaviour
     private void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+
+        if (KBCounter <= 0)
+        {
+           
+            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        }
+        else
+        {
+            if(KnockFromRight == true)
+            {
+                rb.velocity = new Vector2(-KBForce, KBForce);
+            }
+            if(KnockFromRight == false)
+            {
+                rb.velocity = new Vector2(KBForce, KBForce);
+            }
+
+            KBCounter -= Time.deltaTime;
+        }
+       
 
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce); //to be changed to something else later
-        }
-
-        if (Input.GetButtonDown("Jump") && rb.velocity.y> 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); //to be changed to something else later
         }
 
         UpdateAnimationUpdate();
@@ -61,7 +78,7 @@ public class playerMovement : MonoBehaviour
     private void UpdateAnimationUpdate()
     {
         MovementState state;
-
+        
         if (dirX > 0f)
         {
             state = MovementState.running;
