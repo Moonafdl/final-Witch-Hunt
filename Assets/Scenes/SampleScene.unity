@@ -7217,6 +7217,10 @@ MonoBehaviour:
     m_Bits: 64
   moveSpeed: 8
   jumpForce: 14
+  KBForce: 5
+  KBCounter: 0
+  KBTotalTime: 0.2
+  KnockFromRight: 1
 --- !u!114 &1387733404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10785,6 +10789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   pHealth: {fileID: 1387733405}
+  playerMovement: {fileID: 1387733403}
 --- !u!114 &2133266753
 MonoBehaviour:
   m_ObjectHideFlags: 0
