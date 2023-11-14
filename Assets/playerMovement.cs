@@ -24,6 +24,13 @@ public class playerMovement : MonoBehaviour
 
     public bool KnockFromRight;
 
+    //coyoteTime
+    private float coyoteTime = 0.1f;
+    private float coyoteTimeCounter;
+    private bool hasJumped;
+
+
+
     private enum MovementState { idle, running, jumping, falling}
     
 
@@ -40,6 +47,7 @@ public class playerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
 
+        //knockback
         if (KBCounter <= 0)
         {
            
@@ -58,13 +66,27 @@ public class playerMovement : MonoBehaviour
 
             KBCounter -= Time.deltaTime;
         }
-       
 
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        //coyote time
+        if (isGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce); //to be changed to something else later
+            coyoteTimeCounter = coyoteTime;
+            hasJumped = false;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
         }
 
+
+        if (Input.GetButtonDown("Jump") && coyoteTimeCounter >0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce); //to be changed to something else later
+            coyoteTimeCounter = 0f;
+            hasJumped = true;
+        }
+
+       
         UpdateAnimationUpdate();
     }
 
