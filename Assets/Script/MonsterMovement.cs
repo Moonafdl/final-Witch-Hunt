@@ -13,6 +13,15 @@ public class MonsterMovement : MonoBehaviour
     public bool isChasing;
     public float chaseDistance;
 
+    //animation
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        
+    }
+
 
     // Update is called once per frame
     void Update()
