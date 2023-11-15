@@ -16,9 +16,27 @@ public class CraftingManager : MonoBehaviour
     public Item[] recipeResult;
     public Slot resultSlot;
 
+    //testing exit time
+    private bool craftingComplete = false; // Flag to check if crafting is complete
+    public float craftingDuration = 5f; // Duration for crafting completion
+    private float craftingTimer = 0f;
+
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+
+        if (craftingComplete)
+        {
+            // If crafting is complete, start the timer
+            craftingTimer += Time.deltaTime;
+
+            if (craftingTimer >= craftingDuration)
+            {
+                // If the timer reaches the specified duration, load the next level
+                LoadNextLevel();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
         {
             if(currentItem != null)
             {
@@ -69,9 +87,14 @@ public class CraftingManager : MonoBehaviour
         {
             if (recipes[i] == currentRecipeString) 
             {
-                resultSlot.gameObject.SetActive(true );
+                resultSlot.gameObject.SetActive(true);
                 resultSlot.GetComponent<Image>().sprite = recipeResult[i].GetComponent<Image>().sprite;
                 resultSlot.item = recipeResult[i];
+
+                craftingComplete = true; // Set craftingComplete flag to true when a recipe is created
+                craftingTimer = 0f; // Reset the timer
+
+                Debug.Log("Crafting complete! Flag set to true.");
             }
         }
     }
@@ -96,7 +119,22 @@ public class CraftingManager : MonoBehaviour
         }
     }
 
-    
 
+    void LoadNextLevel()
+    {
+        // Load the next level here
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextLevelIndex = currentLevelIndex + 1;
+
+        if (nextLevelIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.Log("Loading next level: " + SceneManager.GetSceneByBuildIndex(nextLevelIndex).name);
+            SceneManager.LoadScene(nextLevelIndex);
+        }
+        else
+        {
+            Debug.LogError("No next level available. Check Build Settings.");
+        }
+    }
 
 }
