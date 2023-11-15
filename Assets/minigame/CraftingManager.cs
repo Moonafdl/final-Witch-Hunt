@@ -18,7 +18,7 @@ public class CraftingManager : MonoBehaviour
 
     //testing exit time
     private bool craftingComplete = false; // Flag to check if crafting is complete
-    public float craftingDuration = 5f; // Duration for crafting completion
+    public float craftingDuration = 3f; // Duration for crafting completion
     private float craftingTimer = 0f;
 
     private void Update()
