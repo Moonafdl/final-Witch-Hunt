@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - NextLevel
   - OneWayPlatform
+  - Block
   layers:
   - Default
   - TransparentFX
