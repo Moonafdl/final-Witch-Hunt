@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1e07a4fcb9f3aa94ea48125237104d2f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 300
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Spooky Hollow
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2cc2b0b75515de44c8f656c201b48910, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
