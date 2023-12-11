@@ -13,6 +13,7 @@ TagManager:
   - NextLevel
   - OneWayPlatform
   - Block
+  - Trap
   layers:
   - Default
   - TransparentFX

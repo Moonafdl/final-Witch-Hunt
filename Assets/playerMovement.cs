@@ -30,7 +30,8 @@ public class playerMovement : MonoBehaviour
     private float coyoteTimeCounter;
     private bool hasJumped;
 
-
+    private float horizontalInput;
+    bool wasFacingLeft = false;
 
     private enum MovementState { idle, running, jumping, falling}
     
@@ -101,39 +102,53 @@ public class playerMovement : MonoBehaviour
     private void UpdateAnimationUpdate()
     {
         MovementState state;
-        
+
         if (dirX > 0f)
         {
             state = MovementState.running;
-            sprite.flipX = false;
+            if (wasFacingLeft) // Check if previously facing left, then rotate it back
+            {
+                transform.Rotate(0f, 180f, 0f);
+                wasFacingLeft = false;
+            }
         }
         else if (dirX < 0f)
         {
             state = MovementState.running;
-            sprite.flipX = true;
+            if (!wasFacingLeft) // Check if previously facing right, then rotate it
+            {
+                transform.Rotate(0f, 180f, 0f);
+                wasFacingLeft = true;
+            }
         }
         else
         {
             state = MovementState.idle;
         }
 
-        if(rb.velocity.y > .1f)
+        if (rb.velocity.y > 0.1f)
         {
             state = MovementState.jumping;
         }
-        else if(rb.velocity.y < -.1f)
+        else if (rb.velocity.y < -0.1f)
         {
             state = MovementState.falling;
         }
 
-        anim.SetInteger("state",(int) state );
+        anim.SetInteger("state", (int)state);
     }
+
+
 
     private bool isGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
 
-    
+    public bool canAttack()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        return horizontalInput == 0 && isGrounded();
+    }
 
 }
